@@ -1,4 +1,4 @@
-## CODIGO PARA CAPITULO 2
+## CODIGO PARA VIDEO 5
 
 
 # importar e inspecionar esplex
@@ -40,11 +40,17 @@ str(esplex$categoria)
 
 levels(esplex$categoria)
 
+#####################################
+### Manipulando conjunto de dados ###
+#####################################
+
+# instalar pacotes (rodar apenas uma vez)
+
+install.packages("tidyverse")
 
 # carregando pacotes
 
 library(tidyverse)
-
 
 
 # selecionando variaveis palavra, concretude, imageabilidade e categoria
