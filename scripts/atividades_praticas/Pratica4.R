@@ -1,4 +1,4 @@
-### Referentes ao video 9
+### Referentes ao video 10
 
 # 1. Qual a diferenca entre distribuicao teorica e distribuicao empirica? Os dados que coletamos sao instancias de distribuicao teorica ou distribuicao empirica?
   

@@ -2,7 +2,7 @@
 
 # 1. Qual a diferenca entre distribuicao teorica e distribuicao empirica? Os dados que coletamos sao instancias de distribuicao teorica ou distribuicao empirica?
 
-### RESPOSTA: Os dados observados sao instancias de distribuicao empirica, pois o coletamos experimentalmente. Ja as distribuicoes teoricas sao distribuicoes teoricamente previstas considerando-se determinados parametros.
+### RESPOSTA: Os dados observados sao instancias de distribuicao empirica, pois os coletamos experimentalmente. Ja as distribuicoes teoricas sao distribuicoes teoricamente previstas considerando-se determinados parametros.
   
 # 2. Quais sao as caracteristicas de uma distribuicao normal? Quais sao seu parametros?
 
