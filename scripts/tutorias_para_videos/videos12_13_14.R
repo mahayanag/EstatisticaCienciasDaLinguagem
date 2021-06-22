@@ -1,4 +1,4 @@
-## CODIGOS PARA VIDEO 12 (regressao linear 1) E VIDEO 13 (regressao linear 2)
+## CODIGOS PARA VIDEO 12, 13 e 14 (regressao linear 1, 2 e 3)
 
 ##########################
 ### REGRESSAO LINEAR 1 ###
