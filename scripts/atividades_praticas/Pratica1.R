@@ -2,7 +2,7 @@
 
 ## 1. Crie um script no R
 
-## 2. Execute os comandos necessários para executar as operações abaixo:
+## 2. Execute os comandos necessários para executar as operaçoes abaixo:
 
 # A soma de 567 e 27783 
 
