@@ -1,4 +1,4 @@
-## Pratica referente aos videos 17 e 18
+## Pratica referente aos videos 19 e 20
 
 #Para praticar o que aprendemos neste capitulo, use o conjunto de dados `alunos.csv` e ajuste um modelo linear para investigar se a altura de uma pessoa (medida em centimetros nesse modelo) muda em funcao de seu genero. Voce devera ajustar dois modelos para praticar o que aprendemos sobre contrastes:
   

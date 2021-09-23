@@ -1,125 +1,124 @@
-## CODIGO PARA VIDEOS 17 e 18
+## CODIGO PARA VIDEO 17 E 18
 
-#######################
-#### MODELO LINEAR ####
-#######################
-
-
-## carregando pacotes para o capitulo
+# pacotes para o capitulo
 library(tidyverse)
 library(broom)
 
-## conjunto de dados
 
-esplex <- read.csv("dados/esplex.csv")
+# importar conjunto de dados
+aquisicao <- read.csv("dados/aquisicao_mediana.csv")
 
-str(esplex)
+# ajustando modelo producao ~ idade
+mdl.idade <- lm(producao ~ idade, aquisicao) 
 
-levels(esplex$categoria)
-
-### apenas se CATEGORIA nao estiver codificada como factor, rodar o codigo abaixo
-# codificando variavel como categorica
-esplex$categoria <- as.factor(esplex$categoria)
-
-str(esplex)
-
-
-# criando subconjunto de dados
-
-esplex.cat <- esplex %>% 
-  select(palavra, categoria, concretude) %>%  # L1
-  filter(categoria %in% c("VERBO", "NOME")) %>% # L2
-  group_by(categoria) %>% # L3
-  arrange(desc(concretude)) %>% # L4
-  top_n(n = 6) %>%  # L5
-  droplevels()
-
-# inspecionando novo conjunto
-esplex.cat
-
-
-## ajustar o modelo
-modelo.categoria <- lm(concretude ~ categoria, esplex.cat)
-
-## coeficientes
-tidy(modelo.categoria) %>% 
-  select(term, estimate)
-
-## médias de concretude por categoria
-esplex.cat %>%
-  group_by(categoria) %>%
-  summarize(mean(concretude))
-
-# ajustando os niveis manualmente
-esplex.cat <- mutate(esplex.cat, categoria01 = ifelse(categoria == "VERBO", 1, 0))
-
-
-## ajustar o modelo
-modelo.categoria01 <- lm(concretude ~ categoria01, esplex.cat)
-
-## coeficientes
-tidy(modelo.categoria01) %>% 
+# extraindo intercepto e slope
+tidy(mdl.idade) %>% 
   select(term, estimate)
 
 
-# mudando nivel de referencia da variavel
-esplex.cat$categoriaRelevel <- relevel(esplex.cat$categoria, ref = "VERBO")
+# criando variavel
+aquisicao <- aquisicao %>% 
+  mutate(idade_c = idade - mean(idade))
+
+# vendo a nova variavel criada
+head(aquisicao)
+
+# comparando a media de idade e de idade_c
+aquisicao %>% 
+  summarise(media.idade = mean(idade), media.idade_c = mean(idade_c))
+
+#novo modelo, com variavel centrada
+mdl.idade_c <- lm(producao ~ idade_c, aquisicao) 
+
+tidy(mdl.idade_c) %>% 
+  select(term, estimate)
+
+# intercepto igual a media  de producao
+mean(aquisicao$producao)
 
 
-# novo modelo com novo nivel de referencia
-modelo.relevel = lm(concretude ~ categoriaRelevel, esplex.cat)
 
-tidy(modelo.relevel) %>% 
+# importando dados
+callipo <- read.csv("dados/callipo.csv")
+
+# vendo conjunto de dados
+
+str(callipo)
+
+
+# ajustando modelo compreensao ~ tempo + pseudo
+mdl.tempo.pseudo <- lm(compreensao ~ tempo + pseudo, callipo)
+
+tidy(mdl.tempo.pseudo) %>% 
   select(term, estimate)
 
 
-###########################################
-#### FACA UMA PAUSA AQUI PARA ABSORVER ####
-#### BEM OS CONCEITOS DE SLOPE E       #### 
-#### INTERCEPTO NESSE NOVO CONTEXTO -  ####
-#### CONTINUE QUANDO SE SENTIR         ####
-#### CONFORTAVEL                       ####
-###########################################
-
-## FIM DO VIDEO 17
-## INICIO DO VIDEO 18
-
-####################
-#### CONTRASTES ####
-####################
-
-# conferindo contraste
-contrasts(esplex.cat$categoria)
+# conferindo amplitude das variaveis preditoras 
+range(callipo$tempo)
+range(callipo$pseudo)
 
 
-# ajustanto novo contraste
-contrasts(esplex.cat$categoria) <- contr.sum(2)
+# criando valores padronizados para variaveis preditoras
 
-contrasts(esplex.cat$categoria)
+callipo <- mutate(callipo,
+                  tempo_c = tempo - mean(tempo), #centrando tempo
+                  tempo_z = tempo_c/sd(tempo_c), #padronizando tempo
+                  pseudo_c = pseudo - mean(pseudo),
+                  pseudo_z = pseudo_c/sd(pseudo_c))
+
+# inspecionando novas variaveis
+
+str(callipo)
 
 
-# novo modelo: contraste por sum coding
-modelo.contraste <- lm(concretude ~ categoria, esplex.cat)
+# media e desvio-padrao das amostras com valores padronizados
 
-tidy(modelo.contraste) %>% 
+callipo %>% 
+  summarise(m.pseudo_z = mean(pseudo_z), 
+            sd.pseudo_z = sd(pseudo_z), 
+            m.tempo_z = mean(tempo_z), 
+            sd.tempo_z = sd(tempo_z))
+
+# novo modelo com valores padronizados
+
+mdl.tempo.pseudo_z <- lm(compreensao ~ tempo_z + pseudo_z, callipo)
+
+tidy(mdl.tempo.pseudo_z) %>% 
   select(term, estimate)
 
+# media de compreensao
 
-# tirando a media da nota de concretude por categoria
-esplex %>% 
-  group_by(categoria) %>% 
-  summarise(media = mean(concretude))
+mean(callipo$compreensao)
 
-# modelo para esplex
-modelo.3niveis <- lm(concretude ~ categoria, esplex)
+# logaritmo
+log(2)
+log(100)
+log(1000)
 
-tidy(modelo.3niveis) %>% 
-  select(term, estimate)
+# exponencial
+exp(log(2))
+exp(log(100))
+exp(log(1000))
 
 
-# investigando contrastes
-contrasts(esplex$categoria)
+# importar/inspecionar dataframe
+godoy <- read.csv("dados/godoy2014.csv")
 
-## diagnostico do modelo
-library(ggfortify)
-autoplot(modelo.3niveis)
+str(godoy)
+
+# criar variavel com o log de tempo.pronome
+godoy$logRT <- log(godoy$tempo.pronome)
+
+# inspecionando nova variavel
+head(godoy)
+
+ # histograma com dados de tempo.pronome
+ ggplot(godoy, aes(tempo.pronome))+
+   geom_histogram()+
+   theme_bw()
+ 
+ # histograma com dados de logRT
+ ggplot(godoy, aes(logRT))+
+   geom_histogram()+
+   theme_bw()
+
