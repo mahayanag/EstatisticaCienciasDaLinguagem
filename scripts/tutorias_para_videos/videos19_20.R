@@ -81,8 +81,8 @@ tidy(modelo.relevel) %>%
 #### CONFORTAVEL                       ####
 ###########################################
 
-## FIM DO VIDEO 17
-## INICIO DO VIDEO 18
+## FIM DO VIDEO 19
+## INICIO DO VIDEO 20
 
 ####################
 #### CONTRASTES ####
