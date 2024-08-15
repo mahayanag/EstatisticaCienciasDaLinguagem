@@ -13,6 +13,8 @@ esplex <- read.csv("dados/esplex.csv")
 
 modelo.c <- lm(imageabilidade ~ concretude, data = esplex)
 
+summary(modelo.c)
+
 modelo.cffr <- lm(imageabilidade ~ concretude + familiaridade + log(frq), data = esplex)
 
 # inspecionando intercepto e slope
@@ -22,12 +24,19 @@ library(broom)
 tidy(modelo.c) %>% 
   select(term, estimate)
 
+y = 0.858 + (3*0.829)
+
 tidy(modelo.cffr) %>% 
   select(term, estimate)
 
 # buscando r2 com funcao glance (pacote broom)
 
 glance(modelo.c)
+
+
+library(performance)
+
+check_model(modelo.c)
 
 glance(modelo.cffr)
 
